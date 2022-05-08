@@ -3,11 +3,14 @@ from django.utils import timezone
 from .models import Question
 from django.http import HttpResponseNotAllowed
 from .forms import QuestionForm, AnswerForm
-
+from django.core.paginator import Paginator
 
 def index(request):
+    page = request.GET.get('page', '1')
     question_list = Question.objects.order_by('-create_date')
-    context = {'question_list': question_list}
+    paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+    context = {'question_list': page_obj}
     return render(request, 'pybo/question_list.html', context)
 
 
@@ -45,3 +48,4 @@ def question_create(request):
         form = QuestionForm()
     context = {'form': form}
     return render(request, 'pybo/question_form.html', context)
+
