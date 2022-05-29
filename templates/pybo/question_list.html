@@ -33,9 +33,16 @@
                 {{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}
             </td>
             <td class="text-start">
-                <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
-                {% if question.answer_set.count > 0 %}
-                <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
+                {% if question.mainphoto %}
+                    <a href="{% url 'pybo:detail' question.id %}">사진있음 + {{ question.subject }}</a>
+                    {% if question.answer_set.count > 0 %}
+                    <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+                    {% if question.answer_set.count > 0 %}
+                    <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
+                    {% endif %}
                 {% endif %}
             </td>
             <td>{{ question.author.username }}</td>  <!-- 글쓴이 추가 -->

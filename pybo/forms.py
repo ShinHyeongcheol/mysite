@@ -1,15 +1,18 @@
 from django import forms
+from django.forms import ModelForm
+
 from pybo.models import Question, Answer
 
 
-class QuestionForm(forms.ModelForm):
+class QuestionForm(ModelForm):
     class Meta:
         model = Question
-        fields = ['subject', 'content']
+        fields = ['subject', 'content','mainphoto']
 
         labels = {
             'subject': '제목',
             'content': '내용',
+            'mainphoto' : '사진'
         }
 
 
