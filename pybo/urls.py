@@ -9,12 +9,20 @@ app_name = 'pybo'
 
 urlpatterns = [
     # base_views.py
+
     path('',
          base_views.index, name='index'),
     path('<int:question_id>/',
          base_views.detail, name='detail'),
 
+    path('question/list/', base_views.index, name='index'),
+    path('question/list/<str:category_name>/', base_views.index, name='index'),
+    path('question/detail/<int:question_id>/', base_views.detail, name='detail'),
+
     # question_views.py
+    path('question/craete/<str:category_name>/',
+         question_views.question_create, name='question_create'),
+
     path('question/create/',
          question_views.question_create, name='question_create'),
     path('question/modify/<int:question_id>/',
@@ -32,9 +40,12 @@ urlpatterns = [
          answer_views.answer_delete, name='answer_delete'),
     path('answer/vote/<int:answer_id>/', answer_views.answer_vote, name='answer_vote'),
 
+
+
 ]
 
 urlpatterns += static(
         settings.MEDIA_URL,
         document_root = settings.MEDIA_ROOT
     )
+
