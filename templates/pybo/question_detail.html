@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load pybo_filter %}
 {% block content %}
-<div class="container my-3">
+<div class="container my-3" xmlns:white-space="http://www.w3.org/1999/xhtml">
     <!-- message 표시 -->
     {% if messages %}
     <div class="alert alert-danger my-3" role="alert">
@@ -43,6 +43,8 @@
                     class="recommend btn btn-sm btn-outline-secondary"> 추천
                     <span class="badge rounded-pill bg-success">{{question.voter.count}}</span>
                 </a>
+
+                </a>
                 {% if request.user == question.author %}
                     <a href="{% url 'pybo:question_modify' question.id  %}"
                         class="btn btn-sm btn-outline-secondary">수정</a>
@@ -76,6 +78,8 @@
                     class="recommend btn btn-sm btn-outline-secondary"> 추천
                     <span class="badge rounded-pill bg-success">{{answer.voter.count}}</span>
                 </a>
+                <a href="{% url 'pybo:comment_create' answer.id  %}"
+                   class="btn btn-sm btn-outline-secondary">댓글</a>
                 {% if request.user == answer.author %}
                 <a href="{% url 'pybo:answer_modify' answer.id  %}"
                    class="btn btn-sm btn-outline-secondary">수정</a>
@@ -83,6 +87,19 @@
                    data-uri="{% url 'pybo:answer_delete' answer.id  %}">삭제</a>
                 {% endif %}
             </div>
+            {% if answer.comment_set.all %}
+                <h2 class="border-bottom py-2"></h2>
+                <h5>댓글</h5>
+                {% for comment in answer.comment_set.all %}
+                <div class="my-3">
+                        <div class="badge bg-light text-dark p-2 text-start">
+                            {{ comment.author.username }}
+                            {{comment.create_date}}
+                        </div>
+                    <h6 style="display:inline">{{comment.content|mark}}</h6>
+                </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
     {% endfor %}

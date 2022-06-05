@@ -41,3 +41,11 @@ class Document(models.Model) :
     title = models.CharField(max_length = 200)
     uploadedFile = models.FileField(upload_to="Uploaded Files/")
     dateTimeOfUpload = models.DateTimeField(auto_now=True)
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_comment')
+    Answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
+    voter = models.ManyToManyField(User, related_name='voter_content')

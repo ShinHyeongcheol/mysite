@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import base_views, question_views, answer_views, file_views
+from .views import base_views, question_views, answer_views, file_views, comment_views
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -9,7 +9,6 @@ app_name = 'pybo'
 
 urlpatterns = [
     # base_views.py
-
     path('',
          base_views.index, name='index'),
     path('<int:question_id>/',
@@ -40,6 +39,9 @@ urlpatterns = [
          answer_views.answer_delete, name='answer_delete'),
     path('answer/vote/<int:answer_id>/', answer_views.answer_vote, name='answer_vote'),
 
+    #comment_views.py
+    path('comment/create/<int:answer_id>/',
+         comment_views.comment_create, name='comment_create'),
 
 
 ]
